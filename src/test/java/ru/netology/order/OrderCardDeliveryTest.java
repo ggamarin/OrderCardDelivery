@@ -13,7 +13,6 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class OrderCardDeliveryTest {
     DataGenerator dataGenerator = new DataGenerator();
-    SelenideElement form = $("form[class='form form_size_m form_theme_alfa-on-white']");
 
     @BeforeEach
     void Setup() {
@@ -26,20 +25,20 @@ public class OrderCardDeliveryTest {
         String phone = dataGenerator.makePhone();
         String city = dataGenerator.makeCity();
 
-        form.$("[placeholder='Город']").setValue(city);
-        form.$("[placeholder='Дата встречи']").doubleClick().sendKeys(dataGenerator.forwardDate(3));
-        form.$("[name=name]").setValue(name);
-        form.$("[name=phone]").setValue(phone);
-        form.$(".checkbox__box").click();
+        $("[placeholder='Город']").setValue(city);
+        $("[placeholder='Дата встречи']").doubleClick().sendKeys(dataGenerator.forwardDate(3));
+        $("[name=name]").setValue(name);
+        $("[name=phone]").setValue(phone);
+        $(".checkbox__box").click();
         $(".button__text").click();
         $(withText("Успешно")).shouldBe(visible);
 
         open("http://localhost:9999");
-        form.$("[placeholder='Город']").setValue(city);
-        form.$("[placeholder='Дата встречи']").doubleClick().sendKeys(dataGenerator.forwardDate(4));
-        form.$("[name=name]").setValue(name);
-        form.$("[name=phone]").setValue(phone);
-        form.$(".checkbox__box").click();
+        $("[placeholder='Город']").setValue(city);
+        $("[placeholder='Дата встречи']").doubleClick().sendKeys(dataGenerator.forwardDate(4));
+        $("[name=name]").setValue(name);
+        $("[name=phone]").setValue(phone);
+        $(".checkbox__box").click();
         $(".button__text").click();
         $(withText("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible);
         $("[data-test-id=replan-notification] button.button").click();
@@ -68,7 +67,7 @@ public class OrderCardDeliveryTest {
 
     @Test
     void shouldNotSumbitWithIncorrectName() {
-        SelenideElement selenideElement = form.$("[placeholder='Город']").setValue(dataGenerator.makeCity());
+        $("[placeholder='Город']").setValue(dataGenerator.makeCity());
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(dataGenerator.forwardDate(3));
         $("[name=name]").setValue("Vasiliy Ivanov");
         $("[name=phone]").setValue(dataGenerator.makePhone());
