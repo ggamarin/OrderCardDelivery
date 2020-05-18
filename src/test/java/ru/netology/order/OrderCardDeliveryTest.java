@@ -2,6 +2,7 @@ package ru.netology.order;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
 import ru.netology.generator.DataGenerator;
 
 import static com.codeborne.selenide.Condition.exactText;
@@ -31,13 +32,8 @@ public class OrderCardDeliveryTest {
         $(".checkbox__box").click();
         $(".button__text").click();
         $(withText("Успешно")).shouldBe(visible);
-
-        open("http://localhost:9999");
-        $("[placeholder='Город']").setValue(city);
+        $("input[placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(dataGenerator.forwardDate(4));
-        $("[name=name]").setValue(name);
-        $("[name=phone]").setValue(phone);
-        $(".checkbox__box").click();
         $(".button__text").click();
         $(withText("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible);
         $("[data-test-id=replan-notification] button.button").click();
